@@ -1,15 +1,12 @@
 package com.aaronxu.freeyellowbicycle;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
     protected void cantFindDialog(final String yellowNumber) {
         AlertDialog.Builder canFindDialog = new AlertDialog.Builder(MainActivity.this);
         canFindDialog.setIcon(android.R.drawable.stat_sys_warning);
-        canFindDialog.setMessage("啊哦，这个车牌("+yellowNumber+")还没有密码\n\n你是否愿意在使用完在使租借完这辆车之后分享它的密码呢？");
+        canFindDialog.setMessage("啊哦，这个..车牌("+yellowNumber+")还没有密码\n\n你是否愿意在使用完在使租借完这辆车之后分享它的密码呢？");
         canFindDialog.setPositiveButton("愿意", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         canFindDialog.setNegativeButton("取消",null);
         canFindDialog.create().show();
     }
-
+//宽口径
     protected void inputNumberDialog(final String yellowNumberInDialog) {
         final EditText inputNumberInDialog = new EditText(MainActivity.this);
         //View myView = LayoutInflater.from(getApplication()).inflate(R.layout.input_number_in_dialog,null);
