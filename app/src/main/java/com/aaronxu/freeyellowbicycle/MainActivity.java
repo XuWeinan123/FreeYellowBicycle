@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
     protected void cantFindDialog(final String yellowNumber) {
         AlertDialog.Builder canFindDialog = new AlertDialog.Builder(MainActivity.this);
         canFindDialog.setIcon(android.R.drawable.stat_sys_warning);
-        canFindDialog.setMessage("啊哦，这个..车牌("+yellowNumber+")还没有密码\n\n你是否愿意在使用完在使租借完这辆车之后分享它的密码呢？");
+        canFindDialog.setMessage("啊哦，这个车牌("+yellowNumber+")还没有密码\n\n你是否愿意在使用完在使租借完这辆车之后分享它的密码呢？");
         canFindDialog.setPositiveButton("愿意", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
