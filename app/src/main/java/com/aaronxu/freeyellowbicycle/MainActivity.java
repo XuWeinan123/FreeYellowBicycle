@@ -1,10 +1,12 @@
 package com.aaronxu.freeyellowbicycle;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,36 +17,47 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity implements KeyEvent.Callback{
 
+    private static final String TAG = "MainActivity";
     private EditText yellowNumber;
     private Button submit_number;
     private String unlock=null;
     private boolean isFind = false;
     private TextView unlockView;
+    private ProgressDialog progressDialog01;
+    private ProgressDialog progressDialog02;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent deliverUsername = getIntent();
+        Bmob.initialize(this,"b8d46b4652df19d095c3b837505342e2");
         yellowNumber = (EditText) findViewById(R.id.yellowNumber);
         submit_number = (Button) findViewById(R.id.submit_number);
         unlockView = (TextView) findViewById(R.id.unlockView);
-        Toast.makeText(getApplicationContext(),deliverUsername.getStringExtra("username")+"\n欢迎您",Toast.LENGTH_SHORT).show();
+        progressDialog01 = new ProgressDialog(MainActivity.this);
+        progressDialog01.setMessage("正在查询中");
+        progressDialog02 = new ProgressDialog(MainActivity.this);
+        progressDialog02.setMessage("正在提交");
+//        Intent deliverUsername = getIntent();
+//        Toast.makeText(getApplicationContext(),deliverUsername.getStringExtra("username")+"\n欢迎您",Toast.LENGTH_SHORT).show();
         submit_number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog01.show();
                 BmobQuery<YellowBicycle> query = new BmobQuery<>();
                 query.addWhereEqualTo("number",yellowNumber.getText().toString());
-                query.findObjects(getApplicationContext(), new FindListener<YellowBicycle>() {
+                Log.d(TAG, "查询的号码是"+yellowNumber.getText().toString());
+                query.findObjects(MainActivity.this, new FindListener<YellowBicycle>() {
                     @Override
                     public void onSuccess(List<YellowBicycle> list) {
-                        Log.d("TAG",list.size()+"条数据。");
+                        Log.d(TAG,list.size()+"条数据。");
                         if(list.size()>=1){
                             isFind = true;
                             for (YellowBicycle yellowBicycle:list){
@@ -56,13 +69,16 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
                         }else{
                             isFind = false;
                             cantFindDialog(yellowNumber.getText().toString());
-                            //Toast.makeText(getApplicationContext(),"无法找到数据",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"无法找到数据",Toast.LENGTH_SHORT).show();
                         }
-                        Log.d("TAG", isFind+"");
+                        Log.d(TAG, isFind+"");
                         //unlockView.setText(unlock);
+                        progressDialog01.dismiss();
                     }
                     @Override
                     public void onError(int i, String s) {
+                        Log.d(TAG, "onError: 出现错误"+s);
+                        progressDialog01.dismiss();
                     }
                 });
             }
@@ -85,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
 //宽口径
     protected void inputNumberDialog(final String yellowNumberInDialog) {
         final EditText inputNumberInDialog = new EditText(MainActivity.this);
+        inputNumberInDialog.setInputType(InputType.TYPE_CLASS_NUMBER);
         //View myView = LayoutInflater.from(getApplication()).inflate(R.layout.input_number_in_dialog,null);
         //final EditText inputNumberInDialog = (EditText) findViewById(R.id.inputNumberInDialog);
         //inputNumberInDialog.setTextColor(Color.BLACK);
@@ -96,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         inputNumberDialog.setPositiveButton("提交", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                progressDialog02.show();
                 String unlockNumberInDialog = inputNumberInDialog.getText().toString();
                 Log.d("TAG", unlockNumberInDialog);
                 YellowBicycle yellowBicycle = new YellowBicycle(yellowNumberInDialog,unlockNumberInDialog);
@@ -104,10 +122,12 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
                     public void onSuccess() {
                         Toast.makeText(MainActivity.this,"提交成功",Toast.LENGTH_SHORT).show();
                         yellowNumber.setText("");
+                        progressDialog02.dismiss();
                     }
                     @Override
                     public void onFailure(int i, String s) {
                         Toast.makeText(MainActivity.this,"提交失败",Toast.LENGTH_SHORT).show();
+                        progressDialog02.dismiss();
                     }
                 });
             }

@@ -23,6 +23,7 @@
             android:layout_centerHorizontal="true"
             android:hint="请输入小黄车车牌号"
             android:gravity="center"
+            android:inputType="number"
             />
         <Button
             android:layout_width="match_parent"
