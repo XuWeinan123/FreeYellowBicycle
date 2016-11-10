@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:background="#1e1e1e">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_star"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:layout_width="232dp"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/edittext_dialog"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="78dp"
+            android:hint="请输入车牌号"
+            android:gravity="center"
+            android:textColorHint="#ffce26"
+            android:textColor="#ffce26"
+            android:textSize="48dp"
+            android:id="@+id/yellowNumber"
+            android:inputType="number"
+            />
+        <Button
+            android:layout_width="232dp"
+            android:layout_height="41dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:background="@mipmap/button_bg"
+            android:text="马上用车"
+            android:layout_centerHorizontal="true"
+            android:textColor="#1b1804"
+            android:id="@+id/submit_number">
+        </Button>
+    </RelativeLayout>
+
+</RelativeLayout>

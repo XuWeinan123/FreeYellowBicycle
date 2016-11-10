@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
     private Button submit_number;
     private String unlock=null;
     private boolean isFind = false;
-    private TextView unlockView;
     private ProgressDialog progressDialog01;
     private ProgressDialog progressDialog02;
 
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         Bmob.initialize(this,"b8d46b4652df19d095c3b837505342e2");
         yellowNumber = (EditText) findViewById(R.id.yellowNumber);
         submit_number = (Button) findViewById(R.id.submit_number);
-        unlockView = (TextView) findViewById(R.id.unlockView);
         progressDialog01 = new ProgressDialog(MainActivity.this);
         progressDialog01.setMessage("正在查询中");
         progressDialog02 = new ProgressDialog(MainActivity.this);
