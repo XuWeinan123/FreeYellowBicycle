@@ -80,7 +80,7 @@ public class ClickForBicycle extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: "+yellowNumber.getText().toString().length());
-                if (yellowNumber.getText().toString().length()>6||yellowNumber.getText().toString().length()<5) {
+                if (yellowNumber.getText().toString().length()>7||yellowNumber.getText().toString().length()<5) {
                     yellowNumber.setText("");
                     Toast.makeText(ClickForBicycle.this,"车牌输入格式不对",Toast.LENGTH_SHORT).show();
                     return;

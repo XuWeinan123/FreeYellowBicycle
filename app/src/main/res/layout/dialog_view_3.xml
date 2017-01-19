@@ -26,6 +26,7 @@
             android:textColor="#ffce26"
             android:textSize="48dp"
             android:id="@+id/unlockNumberShare"
+            android:inputType="number"
             />
         <TextView
             android:layout_width="wrap_content"
